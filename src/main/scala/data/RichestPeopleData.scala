@@ -3,7 +3,7 @@ import org.apache.spark.sql.{Dataset, SparkSession}
 import utils.DataReader
 
 
-sealed case class RichestPeopleData(
+sealed case class RichestPeopleData( // schema setup here
                                      rank: Long,
                                      name: String,
                                      net_worth: String,
@@ -28,7 +28,8 @@ object RichestPeopleData extends DataLoader[RichestPeopleData] {
 
   override def loadData()(implicit spark: SparkSession): Dataset[RichestPeopleData] = {
     import spark.implicits._
-    DataReader.readCsv(FILE_PATH)
-      .as[RichestPeopleData]
+    val x = DataReader.readCsv(FILE_PATH) // dynamic (can work fine with dataframes)
+    val y = x.as[RichestPeopleData] // static
+    y
   }
 }

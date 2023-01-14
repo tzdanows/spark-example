@@ -13,7 +13,7 @@ object Billionaires {
     val out = RichestPeopleData
       .loadData()
       .groupBy(RichestPeopleData.Col.NATIONALITY)
-      .avg(RichestPeopleData.Col.AGE)
+      .avg(RichestPeopleData.Col.AGE) // or .avg("age") but explicitness is helpful
       .select(
         col(RichestPeopleData.Col.NATIONALITY),
         col(s"avg(${RichestPeopleData.Col.AGE})").as(RichestPeopleData.Col.AGE)
